@@ -1,0 +1,81 @@
+#------------------------------------------------------------------------------------------------
+#  Copyright (c) 2022 by Aaron Neal Crawford
+#------------------------------------------------------------------------------------------------
+#  Purpose of Program:
+#  Output class info based on user input and keys within dictionaries, then pickle those dictionaries.
+#=================================================================================================
+# Data Dictionary
+#  Name                     Type          Range         Use
+#  ------                   -----         ----------    -----------------------------------------
+#  pickle                   functino      pickle
+#  room_dict                dictionary                  Contains the key of class number with output
+#                                                       room number
+#  instructor_dict          dictionary                  Contains the key of class number with output
+#                                                       Instructor name
+#  time_dict                dictionary                  Contains the key of class number with output
+#                                                       time of the class
+#  dictionaries             variable      room_dict, instructor_dict, time_dict
+#  filename                 variable                    stores pickle file name
+#  outfile                  variable                    opens the pickle file
+#
+#=================================================================================================
+#  Functions used:
+#  Name                  Inputs           Use
+#  ------                ------------     --------------------------------------------------------
+#  course_info()         course_number    Compares input to the keys in all dictionaries, outputs
+#                                         course information if key is validated
+#=================================================================================================
+
+# imports pickle
+import pickle
+
+# create dictionaries
+room_dict = {'CS101': 3004, 'CS102': 4501, 'CS103': 6755, 'NT110': 1244, 'CM241': 1411}
+instructor_dict = {'CS101': 'Haynes', 'CS102': 'Alvaredo', 'CS103': 'Rich', 'NT110': 'Burke', 'CM241': 'Lee'}
+time_dict = {'CS101': '8:00 a.m.', 'CS102': '9:00 a.m.', 'CS103': '10:00 a.m.', 'NT110': '11:00 a.m.',
+                 'CM241': '1:00 p.m.'}
+
+# insert all dictionaries into a single variable
+dictionaries = room_dict, instructor_dict, time_dict
+
+#====================================================================================
+# Function name: course_info()     Author: Aaron Crawford
+# Date Written: May 6, 2022
+#====================================================================================
+# Purpose of Function: Compares input to the keys in all dictionaries, outputs
+#                      course information if key is validated
+#====================================================================================
+# Data Dictionary
+#  Name            Type          Range          Use
+#  ------          -----         ----------     ----------------------------
+# course_number    input                        user input for course number key
+#
+#====================================================================================
+def course_info():
+    # user inputs course number/ key
+    course_number = input('Enter a course number or press enter to stop:')
+    # validation loop starts
+    while course_number:
+        # if input is in the dictionaries print class info
+        if course_number in room_dict and instructor_dict:
+            print('Here is the info for', course_number)
+            print('Room:', room_dict[course_number])
+            print('Instructor:', instructor_dict[course_number])
+            print('Time:', time_dict[course_number])
+            course_number = input('Enter another course number or press enter to stop:')
+        # if input is not in the dictionaries print this and start loop over
+        else:
+            print(course_number, 'is an invalid course number')
+            course_number = input('Enter another course number or press enter to stop:')
+
+# runs course_info function
+course_info()
+
+# create pickle file
+filename = 'classpickle.py'
+# open pickle file for writing
+outfile = open('classpickle.py', 'wb')
+# write data to pickle file
+pickle.dump(dictionaries, outfile)
+# close the file
+outfile.close()
